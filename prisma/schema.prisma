@@ -1,0 +1,103 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// This goes in your schema.prisma file
+
+model User {
+ id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
+  email     String   @unique
+  password  String
+  phone     String   @unique
+  role      Role     @default(CONSUMER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Role specific relations
+  farmerProfile     FarmerProfile?
+  consumerProfile   ConsumerProfile?
+  driverProfile     DriverProfile?
+}
+
+enum Role {
+  ADMIN
+  FARMER
+  CONSUMER
+  DRIVER
+}
+
+model Product {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  price       Float
+  quantity    Int
+  rating      Float    @default(0)
+  image       String
+  images      String[] // Array of image URLs
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Category {
+ id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  slug      String    @unique
+  image     String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model FarmerProfile {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  farmLocation String
+  farmSize     String
+  region       String
+  cropTypes    String[]
+  capacity     Int
+  farmPhotos   String[]
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model ConsumerProfile {
+   id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  preferredCrops    String[]
+  quantityRequired  Int
+  priceRangeMin    Float
+  priceRangeMax    Float
+  location         String
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id])
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model DriverProfile {
+ id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  vehicleDetails String
+  regionCoverage String[]
+  pricing        Float
+  termsAccepted  Boolean  @default(false)
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
