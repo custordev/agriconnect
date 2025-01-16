@@ -109,9 +109,9 @@ const Header = () => {
                 <input
                   type="text"
                   placeholder="Search products..."
-                  className="w-full py-2 px-4 pl-10 rounded-full bg-[#423d16] border border-white text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-yellow-400/50"
+                  className="w-full py-2 px-4 pl-10 rounded-full bg-amber-50 border border-[#423d16] text-[#423d16] placeholder-[#423d16] focus:outline-none focus:ring-2 focus:ring-yellow-400/50"
                 />
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#423d16]" />
               </form>
             </div>
 
@@ -227,7 +227,7 @@ const Header = () => {
 
           {/* Mobile Menu */}
           {isMenuOpen && (
-            <div className="lg:hidden border-t border-[#00796B]/30 py-4">
+            <div className="lg:hidden border-t border-[#423d16]/30 py-4">
               <div className="space-y-4">
                 {/* Mobile Search */}
                 <form
@@ -237,7 +237,7 @@ const Header = () => {
                   <input
                     type="text"
                     placeholder="Search products..."
-                    className="w-full py-2 px-4 pl-10 rounded-full bg-[#003D33] border border-[#00796B] text-white placeholder-[#15130b]-300/70 focus:outline-none focus:ring-2 focus:ring-yellow-400/50"
+                    className="w-full py-2 px-4 pl-10 rounded-full bg-amber-50 border border-[#423d16] text-[#423d16] placeholder-[#15130b]-300/70 focus:outline-none focus:ring-2 focus:ring-yellow-400/50"
                   />
                   <Search className="absolute left-7 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#15130b]-300/70" />
                 </form>
@@ -272,7 +272,7 @@ const Header = () => {
 
                 {/* Mobile Auth Buttons */}
                 {!session && (
-                  <div className="px-4 pt-2 border-t border-[#00796B]/30">
+                  <div className="px-4 pt-2 border-t border-[#423d16]/30">
                     <Button
                       className="w-full bg-yellow-400 text-[#004D40] hover:bg-yellow-500"
                       onClick={() => router.push("/login")}
