@@ -9,10 +9,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-import { CircleHelp, Eye, EyeOff,  } from "lucide-react";
+import { CircleHelp, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 type TextInputProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: any;
   errors: any;
   label: string;
