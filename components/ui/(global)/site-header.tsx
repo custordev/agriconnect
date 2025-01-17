@@ -25,6 +25,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 interface SearchFormValues {
   search: string;
@@ -35,7 +36,7 @@ const Header = () => {
   const items = useCartStore((state) => state.items);
   const router = useRouter();
   const form = useForm<SearchFormValues>();
-  const session = null; // Replace with your actual session management
+  const { data: session } = useSession();
 
   const handleLogout = async () => {
     // Implement your logout logic here
@@ -121,7 +122,7 @@ const Header = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative hover:bg-[#003D33]"
+                className="relative hover:bg-yellow-500"
                 onClick={() => router.push("/cart")}
               >
                 <ShoppingCart className="h-6 w-6 text-white" />
@@ -131,70 +132,30 @@ const Header = () => {
               </Button>
 
               {/* User Menu */}
-              {/* {session ? (
+              {session ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="hidden h-10 w-10 rounded-full lg:inline-flex hover:bg-[#003D33]"
+                      className="hidden h-10 w-10 rounded-full lg:inline-flex hover:bg-yellow-500"
                     >
                       <Avatar className="h-8 w-8">
-                        <AvatarImage
-                          src={session?.user?.image ?? ""}
-                          alt={session?.user?.name ?? "User"}
-                        />
-                        <AvatarFallback className="bg-[#003D33] text-white">
-                          {getInitials(session?.user?.name)}
+                        {/* <AvatarImage alt={session.user.name} /> */}
+                        <AvatarFallback className="bg-yellow-500 text-white">
+                          {getInitials(session.user.name)}
                         </AvatarFallback>
                       </Avatar>
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuLabel className="flex items-center gap-2 p-2">
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage
-                          src={session?.user?.image ?? ""}
-                          alt={session?.user?.name ?? "User"}
-                        />
-                        <AvatarFallback className="bg-[#003D33] text-white">
-                          {getInitials(session?.user?.name)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex flex-col">
-                        <span className="text-sm font-medium">
-                          {session?.user?.name}
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          {session?.user?.email}
-                        </span>
-                      </div>
-                    </DropdownMenuLabel>
+                    <DropdownMenuLabel>{session.user.name}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      className="p-2"
-                      onClick={() => router.push("/dashboard")}
-                    >
-                      Dashboard
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      className="p-2"
-                      onClick={() => router.push("/profile")}
-                    >
+                    <DropdownMenuItem onClick={() => router.push("/profile")}>
                       Profile
                     </DropdownMenuItem>
-                    <DropdownMenuItem
-                      className="p-2"
-                      onClick={() => router.push("/orders")}
-                    >
-                      Orders
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      className="p-2 text-red-500 focus:text-red-500"
-                      onClick={handleLogout}
-                    >
-                      Logout
+                    <DropdownMenuItem onClick={() => signOut()}>
+                      Log out
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -202,18 +163,19 @@ const Header = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="hidden lg:inline-flex hover:bg-[#003D33]"
-                  onClick={() => router.push("/login")}
+                  className="hidden lg:inline-flex hover:bg-yellow-500"
                 >
-                  <User className="h-6 w-6 text-white" />
+                  <Link href="/login">
+                    <User className="h-6 w-6 text-white" />
+                  </Link>
                 </Button>
-              )} */}
+              )}
 
               {/* Mobile Menu Button */}
               <Button
                 variant="ghost"
                 size="icon"
-                className="lg:hidden hover:bg-[#003D33]"
+                className="lg:hidden hover:bg-yellow-500"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {isMenuOpen ? (
@@ -268,19 +230,22 @@ const Header = () => {
                   >
                     About
                   </Link>
-                </div>
-
-                {/* Mobile Auth Buttons */}
-                {!session && (
-                  <div className="px-4 pt-2 border-t border-[#423d16]/30">
-                    <Button
-                      className="w-full bg-yellow-400 text-[#004D40] hover:bg-yellow-500"
-                      onClick={() => router.push("/login")}
+                  {session ? (
+                    <button
+                      onClick={() => signOut()}
+                      className="block py-2 text-white hover:text-yellow-400"
                     >
-                      Sign In
-                    </Button>
-                  </div>
-                )}
+                      Log out
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => signIn()}
+                      className="block py-2 text-white hover:text-yellow-400"
+                    >
+                      Log in
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           )}

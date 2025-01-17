@@ -80,7 +80,7 @@ export function CategorySection() {
             <Link key={category.id} href={`/categories`} passHref>
               <Card className="hover:shadow-lg transition-shadow duration-300">
                 <CardContent className="p-4 flex flex-col items-center text-center">
-                  <div className="w-20 h-20 rounded-full overflow-hidden mb-4 border-4 border-[#004D40]">
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-4 border-4 border-[#423d16]">
                     <Image
                       src={category.imageUrl}
                       alt={category.title}
@@ -103,7 +103,7 @@ export function CategorySection() {
         <div className="flex justify-center mt-8">
           <Button
             asChild
-            className="bg-[#004D40] hover:bg-[#00695C] text-white"
+            className="bg-[#423d16] hover:bg-yellow-600 text-white"
           >
             <Link href="/categories">View All Categories</Link>
           </Button>

@@ -1,19 +1,23 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// app/components/RegisterForm.tsx
 "use client";
-import { Phone, Loader2, Lock, User } from "lucide-react";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import Link from "next/link";
 
-type UserProps = {
-  name: string;
-  phone: string;
-  password: string;
-  role: 'FARMER' | 'CONSUMER' | 'DRIVER';
-};
+import { Headset, Loader2, Lock, User } from "lucide-react";
+import React, { useState } from "react";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { Role, UserProps } from "@/types/types";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { createUser } from "@/actions/users";
+import TextInput from "../(formInputs)/TextInput";
+import PasswordInput from "../(formInputs)/PasswordInput";
+import SubmitButton from "../(formInputs)/SubmitButton";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function RegisterForm() {
   const [loading, setLoading] = useState(false);
@@ -21,128 +25,136 @@ export default function RegisterForm() {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<UserProps>();
+    setValue,
+  } = useForm<UserProps>({
+    defaultValues: {
+      role: "CONSUMER", // Set default role
+    },
+  });
   const router = useRouter();
 
   async function onSubmit(data: UserProps) {
     setLoading(true);
+    data.name = `${data.firstName} ${data.lastName}`;
+    data.image =
+      "https://utfs.io/f/59b606d1-9148-4f50-ae1c-e9d02322e834-2558r.png";
+
     try {
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      
-      const result = await res.json();
-      
-      if (res.ok) {
-        toast.success("Registration successful!");
-        // Redirect to appropriate onboarding page based on role
-        router.push(`/onboarding/${data.role.toLowerCase()}`);
+      const res = await createUser(data);
+      if (res.status === 201) {
+        // Changed from 200 to 201 to match API
+        setLoading(false);
+        toast.success("Account Created successfully");
+        router.push("/login");
       } else {
-        toast.error(result.error || "Registration failed");
+        setLoading(false);
+        toast.error(res.error || "Something went wrong");
       }
     } catch (error) {
-      toast.error("Something went wrong");
-    } finally {
       setLoading(false);
+      console.error("Network Error:", error);
+      toast.error("It seems something is wrong, try again");
     }
   }
 
   return (
     <div className="w-full py-5 lg:px-8 px-6">
-      <div className="py-4 text-amber-700">
-        <h2 className="text-xl lg:text-2xl font-bold leading-9 tracking-tight">
-          Create an account
-        </h2>
-        <p className="text-xs">Join Us, fill in details to register</p>
+      <div className="">
+        <div className="py-4 text-amber-700">
+          <h2 className="text-xl lg:text-2xl font-bold leading-9 tracking-tight">
+            Create an account
+          </h2>
+          <p className="text-xs">Join Us, fill in details to register</p>
+        </div>
       </div>
-
-      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Name</label>
-          <div className="mt-1 relative">
-            <input
-              {...register("name", { required: "Name is required" })}
-              type="text"
-              className="w-full px-4 py-2 border rounded-md"
+      <div className="">
+        <form className="space-y-3" onSubmit={handleSubmit(onSubmit)}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <TextInput
+              register={register}
+              errors={errors}
+              label="First Name"
+              name="firstName"
+              icon={User}
+              placeholder="First Name"
             />
-            {errors.name && (
-              <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Phone</label>
-          <div className="mt-1 relative">
-            <input
-              {...register("phone", { required: "Phone is required" })}
-              type="tel"
-              className="w-full px-4 py-2 border rounded-md"
+            <TextInput
+              register={register}
+              errors={errors}
+              label="Last Name"
+              name="lastName"
+              icon={User}
+              placeholder="Last Name"
             />
-            {errors.phone && (
-              <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>
-            )}
           </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Role</label>
-          <div className="mt-1 relative">
-            <select
-              {...register("role", { required: "Role is required" })}
-              className="w-full px-4 py-2 border rounded-md"
-            >
-              <option value="">Select a role</option>
-              <option value="FARMER">Farmer</option>
-              <option value="CONSUMER">Consumer</option>
-              <option value="DRIVER">Driver</option>
-            </select>
-            {errors.role && (
-              <p className="text-red-500 text-xs mt-1">{errors.role.message}</p>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Password</label>
-          <div className="mt-1 relative">
-            <input
-              {...register("password", { required: "Password is required" })}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <TextInput
+              register={register}
+              errors={errors}
+              label="Phone"
+              name="phone"
+              icon={Headset}
+              placeholder="phone"
+            />
+            <PasswordInput
+              register={register}
+              errors={errors}
+              label="Password"
+              name="password"
+              icon={Lock}
+              placeholder="Password"
               type="password"
-              className="w-full px-4 py-2 border rounded-md"
             />
-            {errors.password && (
-              <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
-            )}
           </div>
+          <div className="space-y-2">
+            <label
+              htmlFor="role"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Role
+            </label>
+            <Select
+              onValueChange={(value: Role) => setValue("role", value)}
+              defaultValue="CONSUMER"
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select your role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="CONSUMER">Consumer</SelectItem>
+                <SelectItem value="FARMER">Farmer</SelectItem>
+                <SelectItem value="DRIVER">Driver</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <SubmitButton
+              title="Sign Up"
+              loadingTitle="Creating Please wait.."
+              loading={loading}
+              className="w-full"
+              loaderIcon={Loader2}
+              showIcon={false}
+            />
+          </div>
+        </form>
+
+        <div className="flex items-center py-4 justify-center space-x-1 text-slate-900">
+          <div className="h-[1px] w-full bg-slate-200"></div>
+          <div className="uppercase">Or</div>
+          <div className="h-[1px] w-full bg-slate-200"></div>
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-700 hover:bg-amber-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
-        >
-          {loading ? (
-            <>
-              <Loader2 className="animate-spin h-5 w-5 mr-2" />
-              Registering...
-            </>
-          ) : (
-            "Register"
-          )}
-        </button>
-      </form>
-
-      <p className="mt-6 text-center text-sm text-gray-500">
-        Already have an account?{" "}
-        <Link href="/login" className="text-amber-700 hover:text-amber-600">
-          Login
-        </Link>
-      </p>
+        <p className="mt-6 text-left text-sm text-gray-500">
+          Already Registered?{" "}
+          <Link
+            href="/login"
+            className="font-semibold leading-6 text-amber-700 hover:text-amber-600"
+          >
+            Login
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

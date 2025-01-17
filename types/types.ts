@@ -4,15 +4,19 @@ export type CategoryProps = {
   imageUrl: string;
   description: string;
 };
-export type UserProps = {
-  name: string;
+// types/types.ts
+export type Role = "CONSUMER" | "FARMER" | "DRIVER";
+
+export interface UserProps {
+  id?: string;
   firstName: string;
   lastName: string;
+  name?: string;
   phone: string;
-  image: string;
-  email: string;
   password: string;
-};
+  role: Role;
+  image?: string;
+}
 export type LoginProps = {
   email: string;
   password: string;

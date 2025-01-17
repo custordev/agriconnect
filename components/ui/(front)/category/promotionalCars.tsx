@@ -1,6 +1,6 @@
-import Image from "next/image"
-import { Card, CardContent } from "@/components/ui/card"
-import { Sun, Percent, Ship, Tag } from 'lucide-react'
+import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
+import { Sun, Percent, Ship, Tag } from "lucide-react";
 
 const promotions = [
   {
@@ -9,7 +9,7 @@ const promotions = [
     description: "Enjoy Discount all types of Grocery & frozen item",
     icon: <Tag className="h-6 w-6" />,
     image: "/bg/bg-1.jpg",
-    color: "bg-[#004D40]/90",
+    color: "bg-[#423d16]/90",
   },
   {
     title: "Discount",
@@ -17,7 +17,7 @@ const promotions = [
     description: "Enjoy Discount all types of Grocery & frozen item",
     icon: <Percent className="h-6 w-6" />,
     image: "/bg/bg-9.jpg",
-    color: "bg-[#004D40]/80",
+    color: "bg-[#423d16]/80",
   },
   {
     title: "Up to",
@@ -25,7 +25,7 @@ const promotions = [
     description: "Enjoy Discount all types of Grocery & frozen item",
     icon: <Sun className="h-6 w-6" />,
     image: "/bg/bg-2.jpg",
-    color: "bg-[#004D40]/70",
+    color: "bg-[#423d16]/70",
   },
   {
     title: "Free",
@@ -33,9 +33,9 @@ const promotions = [
     description: "Enjoy Discount all types of Grocery & frozen item",
     icon: <Ship className="h-6 w-6" />,
     image: "/bg/bg-4.jpg",
-    color: "bg-[#004D40]/60",
+    color: "bg-[#423d16]/60",
   },
-]
+];
 
 export function PromotionalCards() {
   return (
@@ -66,6 +66,5 @@ export function PromotionalCards() {
         </Card>
       ))}
     </div>
-  )
+  );
 }
-

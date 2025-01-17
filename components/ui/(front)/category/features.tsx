@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Gift, CreditCard,  ShoppingBag } from "lucide-react";
+import { Gift, CreditCard, ShoppingBag } from "lucide-react";
 
 const features = [
   {
@@ -27,7 +27,7 @@ const features = [
 export function Features() {
   return (
     <section className="relative py-16">
-      <div className="absolute inset-0 bg-[#E8F5E9] transform -skew-y-3" />
+      <div className="absolute inset-0 bg-white transform -skew-y-3" />
       <div className="relative max-w-7xl mx-auto px-4">
         <div className="text-center mb-12 space-y-4">
           <h2 className="text-3xl font-bold">
@@ -43,7 +43,7 @@ export function Features() {
           {features.map((feature, index) => (
             <Card
               key={index}
-              className="bg-[#004D40] text-white transition-transform duration-300 hover:scale-105"
+              className="bg-[#423d16] text-white transition-transform duration-300 hover:scale-105"
             >
               <CardContent className="p-6 space-y-4">
                 <div className="p-3 bg-white/10 rounded-full w-fit">

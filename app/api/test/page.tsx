@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
@@ -74,6 +73,48 @@ export default function ApiDocsPage() {
       title: "Fresh Produce",
       slug: "fresh-produce",
       image: "https://example.com/fresh-produce.jpg",
+    },
+  ];
+
+  // const BASE_URL = "https://agriconnect-gamma.vercel.app/api";
+  const userExample = {
+    id: "user_001",
+    email: "farmer@example.com",
+    firstName: "John",
+    lastName: "Doe",
+    name: "John Doe",
+    phone: "+1234567890",
+    image: "https://example.com/profile.jpg",
+  };
+
+  const newUserExample = {
+    email: "farmer@example.com",
+    password: "securepassword123",
+    firstName: "John",
+    lastName: "Doe",
+    name: "John Doe",
+    phone: "+1234567890",
+    image: "https://example.com/profile.jpg",
+  };
+
+  const allUsersExample = [
+    {
+      id: "user_001",
+      email: "farmer1@example.com",
+      firstName: "John",
+      lastName: "Doe",
+      name: "John Doe",
+      phone: "+1234567890",
+      image: "https://example.com/profile1.jpg",
+    },
+    {
+      id: "user_002",
+      email: "farmer2@example.com",
+      firstName: "Jane",
+      lastName: "Smith",
+      name: "Jane Smith",
+      phone: "+1234567891",
+      image: "https://example.com/profile2.jpg",
     },
   ];
 
@@ -224,6 +265,40 @@ export default function ApiDocsPage() {
                   method="DELETE"
                   url="/categories/:id"
                   description="Delete Category"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-2 space-y-6 sm:space-y-8">
+            <div className="bg-amber-800/5 p-4 sm:p-6 rounded-xl">
+              <h2 className="text-xl sm:text-2xl font-bold text-amber-900 mb-6 tracking-tight">
+                Users API
+              </h2>
+              <div className="space-y-6">
+                <EndpointCard
+                  method="GET"
+                  url="/users"
+                  description="Get All Users"
+                  example={allUsersExample}
+                />
+                <EndpointCard
+                  method="GET"
+                  url="/users/:id"
+                  description="Get Single User"
+                  example={userExample}
+                />
+                <EndpointCard
+                  method="POST"
+                  url="/users"
+                  description="Create User"
+                  requestBody={newUserExample}
+                  example={userExample}
+                />
+                <EndpointCard
+                  method="DELETE"
+                  url="/users/:id"
+                  description="Delete User"
                 />
               </div>
             </div>

@@ -33,8 +33,8 @@ export function WeeklyBestSelling() {
                 }
                 className={`rounded-full ${
                   selectedCategory === category.id
-                    ? "bg-[#004D40] hover:bg-[#004D40]/90 text-white"
-                    : "text-gray-700 hover:text-[#004D40]"
+                    ? "bg-[#423d16] hover:bg-[#423d16]/90 text-white"
+                    : "text-gray-700 hover:text-[#423d16]"
                 }`}
                 onClick={() => setSelectedCategory(category.id)}
               >
