@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-const apiEndpoint = "https://localhost:3000/api/products"; // Replace with the actual API URL
+const apiEndpoint = "https://localhost:3000/api/products"; 
 
 
 export async function createProduct(data: {
