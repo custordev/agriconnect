@@ -1,8 +1,18 @@
 import { NextResponse } from "next/server";
 import db from "@/prisma/db";
 
-export async function GET(request: Request, { params: { id } }: any) {
+// Define a specific type for context parameter
+interface Context {
+  params: {
+    id: string;
+  };
+}
+
+// GET /api/users/[id]
+export async function GET(request: Request, context: Context) {
   try {
+    const { id } = context.params;
+
     const user = await db.user.findUnique({
       where: { id },
       select: {
@@ -19,7 +29,8 @@ export async function GET(request: Request, { params: { id } }: any) {
     }
 
     return NextResponse.json(user);
-  } catch (error) {
+  } catch (err) {
+    console.error("Error fetching user:", err);
     return NextResponse.json(
       { error: "Failed to fetch user" },
       { status: 500 }
@@ -27,9 +38,12 @@ export async function GET(request: Request, { params: { id } }: any) {
   }
 }
 
-export async function PUT(request: Request, { params: { id } }: any) {
+// PUT /api/users/[id]
+export async function PUT(request: Request, context: Context) {
   try {
+    const { id } = context.params;
     const body = await request.json();
+
     const { firstName, lastName, name, phone } = body;
 
     const updatedUser = await db.user.update({
@@ -48,7 +62,8 @@ export async function PUT(request: Request, { params: { id } }: any) {
     });
 
     return NextResponse.json(updatedUser);
-  } catch (error) {
+  } catch (err) {
+    console.error("Error updating user:", err);
     return NextResponse.json(
       { error: "Failed to update user" },
       { status: 500 }
@@ -56,14 +71,18 @@ export async function PUT(request: Request, { params: { id } }: any) {
   }
 }
 
-export async function DELETE(request: Request, { params: { id } }: any) {
+// DELETE /api/users/[id]
+export async function DELETE(request: Request, context: Context) {
   try {
+    const { id } = context.params;
+
     await db.user.delete({
       where: { id },
     });
 
     return new NextResponse(null, { status: 204 });
-  } catch (error) {
+  } catch (err) {
+    console.error("Error deleting user:", err);
     return NextResponse.json(
       { error: "Failed to delete user" },
       { status: 500 }
