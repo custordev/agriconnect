@@ -1,17 +1,13 @@
 import { NextResponse } from "next/server";
 import db from "@/prisma/db";
 
-// Define a specific type for context parameter
-interface Context {
-  params: {
-    id: string;
-  };
-}
-
-// GET /api/users/[id]
-export async function GET(request: Request, context: Context) {
+// Use the correct type for route handlers
+export async function GET(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
-    const { id } = context.params;
+    const { id } = params;
 
     const user = await db.user.findUnique({
       where: { id },
@@ -38,10 +34,12 @@ export async function GET(request: Request, context: Context) {
   }
 }
 
-// PUT /api/users/[id]
-export async function PUT(request: Request, context: Context) {
+export async function PUT(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
-    const { id } = context.params;
+    const { id } = params;
     const body = await request.json();
 
     const { firstName, lastName, name, phone } = body;
@@ -71,10 +69,12 @@ export async function PUT(request: Request, context: Context) {
   }
 }
 
-// DELETE /api/users/[id]
-export async function DELETE(request: Request, context: Context) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
-    const { id } = context.params;
+    const { id } = params;
 
     await db.user.delete({
       where: { id },
