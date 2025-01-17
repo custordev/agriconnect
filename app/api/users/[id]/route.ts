@@ -40,7 +40,7 @@ export async function PUT(
 ) {
   try {
     const body = await request.json();
-    const { firstName, lastName, name, phone, image } = body;
+    const { firstName, lastName, name, phone } = body;
 
     const updatedUser = await db.user.update({
       where: { id: params.id },

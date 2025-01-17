@@ -8,11 +8,7 @@ type pageHeaderProps = {
   linkText: string;
   parent?: string;
 };
-export default function pageHeader({
-  href,
-
-  linkText,
-}: pageHeaderProps) {
+export default function pageHeader({ linkText }: pageHeaderProps) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">

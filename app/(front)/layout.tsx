@@ -1,5 +1,5 @@
-import Header from "@/components/ui/(global)/site-header";
-import SiteFooter from "../../components/ui/(global)/site-footer";
+import Header from "@/components/(global)/site-header";
+import SiteFooter from "../../components/(global)/site-footer";
 
 export default function RootLayout({
   children,

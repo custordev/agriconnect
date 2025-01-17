@@ -1,7 +1,6 @@
-
-import { Features } from "@/components/ui/(front)/category/features";
-import { PromotionalCards } from "@/components/ui/(front)/category/promotionalCars";
-import { WeeklyBestSelling } from "@/components/ui/(front)/category/weeklyBestSelling";
+import { Features } from "@/components/(front)/category/features";
+import { PromotionalCards } from "@/components/(front)/category/promotionalCars";
+import { WeeklyBestSelling } from "@/components/(front)/category/weeklyBestSelling";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 
 export default function CategoriesPage() {

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { ProductDetail } from "@/components/ui/(front)/product/product";
-import { ProductReviews } from "@/components/ui/(front)/product/productReview";
-import { ProductSpecifications } from "@/components/ui/(front)/product/productSpecifications";
-import { products } from "@/components/ui/(front)/product/productsSection";
-import { SimilarProducts } from "@/components/ui/(front)/similarProsucts";
+import { ProductDetail } from "@/components/(front)/product/product";
+import { ProductReviews } from "@/components/(front)/product/productReview";
+import { ProductSpecifications } from "@/components/(front)/product/productSpecifications";
+import { products } from "@/components/(front)/product/productsSection";
+import { SimilarProducts } from "@/components/(front)/similarProsucts";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 
 type Product = {

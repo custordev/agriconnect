@@ -1,5 +1,5 @@
 "use client";
-import RegisterForm from "@/components/ui/(form)/registerForm";
+import RegisterForm from "@/components/(form)/registerForm";
 import React from "react";
 
 export default function page() {

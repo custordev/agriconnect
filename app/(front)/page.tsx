@@ -10,8 +10,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import Image from "next/image";
 import Link from "next/link";
-import { CategorySection } from "@/components/ui/(front)/categorySection";
-import MostSelling from "@/components/ui/(front)/mostSelling";
+import { CategorySection } from "@/components/(front)/categorySection";
+import MostSelling from "@/components/(front)/mostSelling";
 
 export default function Page() {
   useEffect(() => {

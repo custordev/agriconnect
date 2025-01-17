@@ -1,6 +1,6 @@
-import { Navbar } from "@/components/ui/(dashboard)/dashboard/Navbar";
-import { Sidebar } from "@/components/ui/(dashboard)/dashboard/Sidebar";
-import SiteFooter from "@/components/ui/(global)/site-footer";
+import { Navbar } from "@/components/(dashboard)/dashboard/Navbar";
+import { Sidebar } from "@/components/(dashboard)/dashboard/Sidebar";
+import SiteFooter from "@/components/(global)/site-footer";
 import { authOptions } from "@/config/auth";
 import { getServerSession } from "next-auth";
 

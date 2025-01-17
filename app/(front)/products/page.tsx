@@ -8,9 +8,9 @@ import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Filter, Search, X } from "lucide-react";
-import { ProductCard } from "@/components/ui/(front)/product/productCard";
-import { products } from "@/components/ui/(front)/product/productsSection";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ProductCard } from "@/components/(front)/product/productCard";
+import { products } from "@/components/(front)/product/productsSection";
 
 const itemsPerPage = 12;
 
