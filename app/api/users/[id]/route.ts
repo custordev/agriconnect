@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcrypt";
 import db from "@/prisma/db";
 
 export async function GET(
