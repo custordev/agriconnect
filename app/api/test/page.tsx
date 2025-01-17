@@ -76,7 +76,6 @@ export default function ApiDocsPage() {
     },
   ];
 
-  // const BASE_URL = "https://agriconnect-gamma.vercel.app/api";
   const userExample = {
     id: "user_001",
     email: "farmer@example.com",
