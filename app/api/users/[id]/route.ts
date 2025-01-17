@@ -1,13 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import db from "@/prisma/db";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: Request, { params: { id } }: any) {
   try {
     const user = await db.user.findUnique({
-      where: { id: params.id },
+      where: { id },
       select: {
         id: true,
         name: true,
@@ -18,14 +15,11 @@ export async function GET(
     });
 
     if (!user) {
-      console.log("User not found with ID:", params.id);
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    console.log("User fetched successfully:", user);
     return NextResponse.json(user);
   } catch (error) {
-    console.log("Error fetching user:", error);
     return NextResponse.json(
       { error: "Failed to fetch user" },
       { status: 500 }
@@ -33,16 +27,13 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(request: Request, { params: { id } }: any) {
   try {
     const body = await request.json();
     const { firstName, lastName, name, phone } = body;
 
     const updatedUser = await db.user.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         name: name || `${firstName} ${lastName}`,
         phone,
@@ -56,10 +47,8 @@ export async function PUT(
       },
     });
 
-    console.log("User updated successfully:", updatedUser);
     return NextResponse.json(updatedUser);
   } catch (error) {
-    console.log("Error updating user:", error);
     return NextResponse.json(
       { error: "Failed to update user" },
       { status: 500 }
@@ -67,19 +56,14 @@ export async function PUT(
   }
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: Request, { params: { id } }: any) {
   try {
     await db.user.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
-    console.log("User deleted successfully with ID:", params.id);
     return new NextResponse(null, { status: 204 });
   } catch (error) {
-    console.log("Error deleting user:", error);
     return NextResponse.json(
       { error: "Failed to delete user" },
       { status: 500 }
