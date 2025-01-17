@@ -1,16 +1,13 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import db from "@/prisma/db";
 
-// Use the correct type for route handlers
 export async function GET(
-  request: Request,
+  req: NextRequest,
   { params }: { params: { id: string } }
-) {
+): Promise<NextResponse> {
   try {
-    const { id } = params;
-
     const user = await db.user.findUnique({
-      where: { id },
+      where: { id: params.id },
       select: {
         id: true,
         name: true,
@@ -35,17 +32,15 @@ export async function GET(
 }
 
 export async function PUT(
-  request: Request,
+  req: NextRequest,
   { params }: { params: { id: string } }
-) {
+): Promise<NextResponse> {
   try {
-    const { id } = params;
-    const body = await request.json();
-
+    const body = await req.json();
     const { firstName, lastName, name, phone } = body;
 
     const updatedUser = await db.user.update({
-      where: { id },
+      where: { id: params.id },
       data: {
         name: name || `${firstName} ${lastName}`,
         phone,
@@ -70,14 +65,12 @@ export async function PUT(
 }
 
 export async function DELETE(
-  request: Request,
+  req: NextRequest,
   { params }: { params: { id: string } }
-) {
+): Promise<NextResponse> {
   try {
-    const { id } = params;
-
     await db.user.delete({
-      where: { id },
+      where: { id: params.id },
     });
 
     return new NextResponse(null, { status: 204 });
