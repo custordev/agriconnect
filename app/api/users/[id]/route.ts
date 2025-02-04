@@ -2,12 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import db from "@/prisma/db";
 
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: { params: { id: string } }
 ): Promise<NextResponse> {
   try {
     const user = await db.user.findUnique({
-      where: { id: params.id },
+      where: { id: context.params.id },
       select: {
         id: true,
         name: true,
