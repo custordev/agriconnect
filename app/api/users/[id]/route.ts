@@ -34,14 +34,14 @@ export async function GET(
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
   try {
     const body = await req.json();
     const { firstName, lastName, name, phone } = body;
 
     const updatedUser = await db.user.update({
-      where: { id: params.id },
+      where: { id: (await params).id },
       data: {
         name: name || `${firstName} ${lastName}`,
         phone,
