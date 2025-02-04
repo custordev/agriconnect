@@ -1,4 +1,4 @@
-import SiteFooter from "@/components/(global)/site-footer";
+// import SiteFooter from "@/components/(global)/site-footer";
 
 export default function RootLayout({
   children,
@@ -9,7 +9,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="">{children}</div>
-        <SiteFooter />
+        {/* <SiteFooter /> */}
       </body>
     </html>
   );

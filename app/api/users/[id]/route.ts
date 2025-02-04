@@ -3,11 +3,11 @@ import db from "@/prisma/db";
 
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ): Promise<NextResponse> {
   try {
     const user = await db.user.findUnique({
-      where: { id: context.params.id },
+      where: { id: params.id },
       select: {
         id: true,
         name: true,
