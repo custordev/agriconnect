@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import db from "@/prisma/db";
 
-export async function GET() {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const users = await db.user.findMany({
       select: {
@@ -22,7 +23,6 @@ export async function GET() {
     );
   }
 }
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
