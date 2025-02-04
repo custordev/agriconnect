@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import db from "@/prisma/db";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const users = await db.user.findMany({
@@ -13,10 +13,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
 
-    console.log("Users fetched successfully:", users);
     return NextResponse.json(users);
   } catch (error) {
-    console.log("Error fetching users:", error);
     return NextResponse.json(
       { error: "Failed to fetch users" },
       { status: 500 }
