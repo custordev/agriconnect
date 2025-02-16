@@ -85,7 +85,7 @@ const Header = () => {
                 Home
               </Link>
               <Link
-                href="/marketplace"
+                href="/marketPlace"
                 className="text-white hover:text-yellow-400 transition-colors"
               >
                 Marketplace

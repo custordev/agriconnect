@@ -60,7 +60,7 @@ export default function RegisterForm() {
   return (
     <div className="w-full py-5 lg:px-8 px-6">
       <div className="">
-        <div className="py-4 text-amber-700">
+        <div className="py-4 text-yellow-500">
           <h2 className="text-xl lg:text-2xl font-bold leading-9 tracking-tight">
             Create an account
           </h2>
@@ -149,7 +149,7 @@ export default function RegisterForm() {
           Already Registered?{" "}
           <Link
             href="/login"
-            className="font-semibold leading-6 text-amber-700 hover:text-amber-600"
+            className="font-semibold leading-6 text-yellow-800 hover:text-yellow-900"
           >
             Login
           </Link>

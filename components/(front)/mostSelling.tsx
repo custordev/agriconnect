@@ -13,7 +13,7 @@ export default function MostSelling() {
             Most selling products
           </h2>
           <Link
-            href="#"
+            href="/products"
             className="text-[#C84C21] hover:text-[#A33D1A] flex items-center gap-2"
           >
             See more

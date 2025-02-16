@@ -58,7 +58,7 @@ export default function LoginForm() {
   return (
     <div className="w-full lg:px-8 px-6 p-2 ">
       <div className="">
-        <div className="py-4 text-yellow-800">
+        <div className="py-4 text-yellow-900">
           <h2 className="text-xl lg:text-2xl font-bold leading-9 tracking-tight  ">
             Login in to your account
           </h2>
@@ -106,7 +106,7 @@ export default function LoginForm() {
           Not a Registered ?{" "}
           <Link
             href="/register"
-            className="font-semibold leading-6 text-yellow-800 hover:text-yellow-800"
+            className="font-semibold leading-6 text-yellow-800 hover:text-yellow-900"
           >
             Create Account
           </Link>
