@@ -37,20 +37,7 @@ enum Role {
   DRIVER
 }
 
-model Product {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  description String
-  price       Float
-  quantity    Int
-  rating      Float    @default(0)
-  image       String
-  images      String[] // Array of image URLs
-  categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
+
 
 model Category {
  id          String    @id @default(auto()) @map("_id") @db.ObjectId
@@ -62,6 +49,24 @@ model Category {
   updatedAt DateTime  @updatedAt
 }
 
+model Product {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  price       Float
+  quantity    Int
+  rating      Float
+  image       String
+  images      String[]
+  categoryId  String   @db.ObjectId
+  category    Category @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+
+
+
 model FarmerProfile {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   farmLocation String
@@ -70,7 +75,7 @@ model FarmerProfile {
   cropTypes    String[]
   capacity     Int
   farmPhotos   String[]
-  userId       String   @unique
+  userId       String   @unique @db.ObjectId
   user         User     @relation(fields: [userId], references: [id])
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -83,7 +88,7 @@ model ConsumerProfile {
   priceRangeMin    Float
   priceRangeMax    Float
   location         String
-  userId           String   @unique
+  userId           String   @unique @db.ObjectId
   user             User     @relation(fields: [userId], references: [id])
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
@@ -95,7 +100,7 @@ model DriverProfile {
   regionCoverage String[]
   pricing        Float
   termsAccepted  Boolean  @default(false)
-  userId         String   @unique
+  userId         String   @unique @db.ObjectId
   user           User     @relation(fields: [userId], references: [id])
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt

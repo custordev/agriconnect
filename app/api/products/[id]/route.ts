@@ -4,10 +4,13 @@
 import db from "@/prisma/db";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request, { params: { id } }: any) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const product = await db.product.findUnique({
-      where: { id },
+      where: { id: (await params).id },
       include: { category: true },
     });
     return NextResponse.json(product);
@@ -18,13 +21,24 @@ export async function GET(request: Request, { params: { id } }: any) {
   }
 }
 
-export async function PUT(request: Request, { params: { id } }: any) {
+export async function PUT(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    const { title, description, price, quantity, rating, image, images, categoryId } =
-      await request.json();
+    const {
+      title,
+      description,
+      price,
+      quantity,
+      rating,
+      image,
+      images,
+      categoryId,
+    } = await request.json();
 
     const updatedProduct = await db.product.update({
-      where: { id },
+      where: { id: (await params).id },
       data: {
         title,
         description,
@@ -44,10 +58,13 @@ export async function PUT(request: Request, { params: { id } }: any) {
   }
 }
 
-export async function DELETE(request: Request, { params: { id } }: any) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const product = await db.product.delete({
-      where: { id },
+      where: { id: (await params).id },
     });
     return NextResponse.json(product);
   } catch (error) {

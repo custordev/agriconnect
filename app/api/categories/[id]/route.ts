@@ -4,12 +4,15 @@
 import db from "@/prisma/db";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request, { params: { id } }: any) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   // console.log(id)
   try {
     const category = await db.category.findUnique({
       where: {
-        id,
+        id: (await params).id,
       },
     });
     //   console.log(category)
@@ -19,7 +22,10 @@ export async function GET(request: Request, { params: { id } }: any) {
   }
 }
 
-export async function PUT(request: Request, { params: { id } }: any) {
+export async function PUT(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   // console.log(id)
   try {
     const { slug, name, image } = await request.json();
@@ -33,7 +39,7 @@ export async function PUT(request: Request, { params: { id } }: any) {
     const updatedCategory = await db.category.update({
       data,
       where: {
-        id,
+        id: (await params).id,
       },
     });
     // console.log(`Updated Category: ${updatedCategory}`);
@@ -43,12 +49,15 @@ export async function PUT(request: Request, { params: { id } }: any) {
   }
 }
 
-export async function DELETE(request: Request, { params: { id } }: any) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   // console.log(id)
   try {
     const deletedCategory = await db.category.delete({
       where: {
-        id,
+        id: (await params).id,
       },
     });
     // console.log(`Deleted The Following Category: ${deletedCategory}`);

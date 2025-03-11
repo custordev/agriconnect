@@ -4,8 +4,16 @@ import db from "@/prisma/db";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const { title, description, price, quantity, rating, image, images, categoryId } =
-    await request.json();
+  const {
+    title,
+    description,
+    price,
+    quantity,
+    rating,
+    image,
+    images,
+    categoryId,
+  } = await request.json();
 
   try {
     const newProduct = await db.product.create({
@@ -30,7 +38,6 @@ export async function POST(request: Request) {
   }
 }
 
-
 export async function GET(request: Request) {
   try {
     const allProducts = await db.product.findMany({
@@ -38,9 +45,11 @@ export async function GET(request: Request) {
         category: true,
       },
     });
-    return NextResponse.json(allProducts);
+
+    return NextResponse.json(allProducts, { status: 200 });
   } catch (error) {
     console.error("Error fetching products:", error);
+
     return NextResponse.json(
       { error: "Failed to fetch products" },
       { status: 500 }
